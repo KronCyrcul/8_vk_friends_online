@@ -1,6 +1,6 @@
 # Watcher of Friends Online
 
-[TODO. There will be project description]
+The script shows online friends for autorisated user.
 
 # How to Install
 
@@ -11,6 +11,19 @@ pip install -r requirements.txt # alternatively try pip3
 ```
 
 Remember, it is recommended to use [virtualenv/venv](https://devman.org/encyclopedia/pip/pip_virtualenv/) for better isolation.
+
+# Usage example
+
+Example of script launch on Linux, Python 3.5:
+
+```
+$ python vk_friends_online.py
+Логин:
+<user login>
+Пароль:
+<user password>
+Pavel Durov
+```
 
 # Project Goals
 
