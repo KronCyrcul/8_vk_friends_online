@@ -1,9 +1,7 @@
 import vk
-
+import getpass
 
 APP_ID = 6642111
-ACCESS_TOKEN = "f8eba6cef8eba6cef8eba6cedef88eff71ff8ebf8eba6cea3bcd37667d7e6d4446f46d6"
-VERSION = 5.73
 
 
 def get_user_login():
@@ -11,7 +9,7 @@ def get_user_login():
 
 
 def get_user_password():
-    return input("Пароль:\n")
+    return getpass.getpass("Пароль:\n")
 
 
 def get_online_friends(login, password):
@@ -29,7 +27,7 @@ def get_online_friends(login, password):
 
 
 def output_friends_to_console(friends_online):
-    session = vk.Session(ACCESS_TOKEN)
+    session = vk.Session(app_id=APP_ID)
     api = vk.API(session)
     for friend in friends_online:
         friend_info = api.users.get(user_id=friend, v=VERSION)
@@ -41,5 +39,9 @@ def output_friends_to_console(friends_online):
 if __name__ == "__main__":
     login = get_user_login()
     password = get_user_password()
-    friends_online = get_online_friends(login, password)
-    output_friends_to_console(friends_online)
+    try:
+        friends_online = get_online_friends(login, password)
+        output_friends_to_console(friends_online)
+    except vk.exceptions.VkAuthError:
+        print("Ошибка авторизацииы")
+    
