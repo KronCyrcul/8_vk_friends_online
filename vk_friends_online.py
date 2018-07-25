@@ -13,7 +13,6 @@ def get_user_password():
 
 
 def get_online_friends(login, password, version=5.73):
-    friends_online = []
     session = vk.AuthSession(
         app_id=APP_ID,
         user_login=login,
