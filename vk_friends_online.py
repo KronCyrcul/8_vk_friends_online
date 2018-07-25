@@ -12,28 +12,24 @@ def get_user_password():
     return getpass.getpass("Пароль:\n")
 
 
-def get_online_friends(login, password):
+def get_online_friends(login, password, version=5.73):
+    friends_online = []
     session = vk.AuthSession(
         app_id=APP_ID,
         user_login=login,
         user_password=password,
         scope="friends",
     )
-    api = vk.API(session)
-    current_user_id = api.users.get(v=VERSION)[0]["id"]
-    online_friends_id = api.friends.getOnline(user_id=current_user_id,
-        v=VERSION)
-    return online_friends_id
+    api = vk.API(session, v=version)
+    online_friends_id = api.friends.getOnline()
+    friends_online = api.users.get(user_ids=online_friends_id)
+    return friends_online
 
 
 def output_friends_to_console(friends_online):
-    session = vk.Session(app_id=APP_ID)
-    api = vk.API(session)
+    print("Друзья онлайн:")
     for friend in friends_online:
-        friend_info = api.users.get(user_id=friend, v=VERSION)
-        first_name = friend_info[0]["first_name"]
-        last_name = friend_info[0]["last_name"]
-        print("{} {}".format(first_name, last_name))
+        print("{} {}".format(friend["first_name"], friend["last_name"]))
 
 
 if __name__ == "__main__":
@@ -44,4 +40,3 @@ if __name__ == "__main__":
         output_friends_to_console(friends_online)
     except vk.exceptions.VkAuthError:
         print("Ошибка авторизацииы")
-    
